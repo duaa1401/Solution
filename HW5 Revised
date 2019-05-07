@@ -1,0 +1,343 @@
+/*What are the names of all the languages in the database*/
+SELECT name FROM language ORDER BY name ASC;
++----------+
+| name     |
++----------+
+| English  |
+| French   |
+| German   |
+| Italian  |
+| Japanese |
+| Mandarin |
++----------+
+/*Return the full names (first and last) of all actors with "BER" in their last name. Sort the returned names by their first name. (Hint: use the CONCAT() function to add two or more strings together.)*/
+SELECT CONCAT(first_name, '' ,last_name) as NAMES FROM actor WHERE last_name LIKE '%ber%' ORDER BY first_name;  
++------------------+
+| NAMES            |
++------------------+
+| CHRISTOPHERBERRY |
+| DARYLWAHLBERG    |
+| HENRYBERRY       |
+| KARLBERRY        |
+| LIZABERGMAN      |
+| NICKWAHLBERG     |
+| PARKERGOLDBERG   |
+| VIVIENBERGEN     |
++------------------+
+/*How many last names are not repeated in the actor table?*/
+ SELECT COUNT(distinct last_name) FROM actor;
++---------------------------+
+| COUNT(distinct last_name) |
++---------------------------+
+|                       121 |
++---------------------------+
+
+select last_name from actor group by last_name having count(actor_id) = 1;
++--------------+
+| last_name    |
++--------------+
+| ASTAIRE      |
+| BACALL       |
+| BALE         |
+| BALL         |
+| BARRYMORE    |
+| BASINGER     |
+| BERGEN       |
+| BERGMAN      |
+| BIRCH        |
+| BLOOM        |
+| BRIDGES      |
+| BULLOCK      |
+| CARREY       |
+| CHAPLIN      |
+| CLOSE        |
+| COSTNER      |
+| CROWE        |
+| CRUISE       |
+| CRUZ         |
+| DAMON        |
+| DAY-LEWIS    |
+| DERN         |
+| DREYFUSS     |
+| DUNST        |
+| GABLE        |
+| GIBSON       |
+| GOLDBERG     |
+| GRANT        |
+| HAWKE        |
+| HESTON       |
+| HOPE         |
+| HUDSON       |
+| HUNT         |
+| HURT         |
+| JOLIE        |
+| JOVOVICH     |
+| LEIGH        |
+| LOLLOBRIGIDA |
+| MALDEN       |
+| MANSFIELD    |
+| MARX         |
+| MCDORMAND    |
+| MIRANDA      |
+| NICHOLSON    |
+| PESCI        |
+| PFEIFFER     |
+| PHOENIX      |
+| PINKETT      |
+| PITT         |
+| POSEY        |
+| PRESLEY      |
+| REYNOLDS     |
+| RYDER        |
+| SINATRA      |
+| SOBIESKI     |
+| STALLONE     |
+| SUVARI       |
+| SWANK        |
+| TAUTOU       |
+| TOMEI        |
+| VOIGHT       |
+| WALKEN       |
+| WAYNE        |
+| WILSON       |
+| WITHERSPOON  |
+| WRAY         |
++--------------+
+66 rows in set (0.00 sec)
+/*How many films involve a "Crocodile" and a "Shark"?*/
+SELECT COUNT(description) FROM film WHERE description LIKE '%Crocodile%' AND description LIKE '%Shark%';
++--------------------+
+| COUNT(description) |
++--------------------+
+|                 10 |
++--------------------+
+/*Return the full names of the actors who played in a film involving a "Crocodile" and a "Shark", along with the release year of the movie, sorted by the actors' last names*/
+SELECT CONCAT(a.first_name,' ',a.last_name) as FName, f.release_year
+FROM film f INNER JOIN film_actor fa ON f.film_id = fa.film_id INNER JOIN actor a ON fa.actor_id = a.actor_id 
+WHERE f.description LIKE '%Crocodile%' AND f.description LIKE '%Shark%' ORDER by a.last_name;
++------------------+--------------+
+| FName            | release_year |
++------------------+--------------+
+| KIRSTEN AKROYD   |         2006 |
+| KIM ALLEN        |         2006 |
+| AUDREY BAILEY    |         2006 |
+| JULIA BARRYMORE  |         2006 |
+| VIVIEN BASINGER  |         2006 |
+| VIVIEN BERGEN    |         2006 |
+| KARL BERRY       |         2006 |
+| KARL BERRY       |         2006 |
+| HENRY BERRY      |         2006 |
+| LAURA BRODY      |         2006 |
+| JOHNNY CAGE      |         2006 |
+| ZERO CAGE        |         2006 |
+| JON CHASE        |         2006 |
+| FRED COSTNER     |         2006 |
+| FRED COSTNER     |         2006 |
+| SUSAN DAVIS      |         2006 |
+| JENNIFER DAVIS   |         2006 |
+| GINA DEGENERES   |         2006 |
+| JULIANNE DENCH   |         2006 |
+| ROCK DUKAKIS     |         2006 |
+| HUMPHREY GARLAND |         2006 |
+| AL GARLAND       |         2006 |
+| EWAN GOODING     |         2006 |
+| PENELOPE GUINESS |         2006 |
+| WILLIAM HACKMAN  |         2006 |
+| MEG HAWKE        |         2006 |
+| WOODY HOFFMAN    |         2006 |
+| MORGAN HOPKINS   |         2006 |
+| JANE JACKMAN     |         2006 |
+| RAY JOHANSSON    |         2006 |
+| ALBERT JOHANSSON |         2006 |
+| RAY JOHANSSON    |         2006 |
+| ALBERT JOHANSSON |         2006 |
+| MILLA KEITEL     |         2006 |
+| FAY KILMER       |         2006 |
+| MATTHEW LEIGH    |         2006 |
+| GENE MCKELLEN    |         2006 |
+| GRACE MOSTEL     |         2006 |
+| GRACE MOSTEL     |         2006 |
+| CHRISTIAN NEESON |         2006 |
+| ALBERT NOLTE     |         2006 |
+| JAYNE NOLTE      |         2006 |
+| KIRSTEN PALTROW  |         2006 |
+| KENNETH PALTROW  |         2006 |
+| SANDRA PECK      |         2006 |
+| PENELOPE PINKETT |         2006 |
+| CAMERON STREEP   |         2006 |
+| JOHN SUVARI      |         2006 |
+| KENNETH TORN     |         2006 |
+| HELEN VOIGHT     |         2006 |
+| GROUCHO WILLIAMS |         2006 |
+| MORGAN WILLIAMS  |         2006 |
+| GENE WILLIS      |         2006 |
+| HUMPHREY WILLIS  |         2006 |
+| WILL WILSON      |         2006 |
+| FAY WOOD         |         2006 |
+| UMA WOOD         |         2006 |
+| MINNIE ZELLWEGER |         2006 |
++------------------+--------------+
+58 rows 
+/*Find all the film categories in which there are between 40 and 60 films.
+Return the names of these categories and the number of films in each category, 
+sorted in descending order of the number of films.*/
+SELECT c.name as "category name",COUNT(*) as "film count"
+FROM category c JOIN film_category fc ON c.category_id = fc.category_id
+JOIN film f ON fc.film_id = f.film_id
+GROUP BY c.name HAVING(COUNT(c.name) between 40 AND 60) ORDER BY (COUNT(c.name)) DESC;
++---------------+------------+
+| category name | film count |
++---------------+------------+
+| Children      |         60 |
+| Comedy        |         58 |
+| Classics      |         57 |
+| Travel        |         57 |
+| Horror        |         56 |
+| Music         |         51 |
++---------------+------------+
+/*Return the full names of all the actors whose first name is the same as the first name of the actor with ID 24.*/
+SELECT CONCAT(first_name, ' ' ,last_name) as NAMES FROM actor 
+WHERE first_name = (SELECT first_name FROM actor WHERE actor_id = 24);
++-------------------+
+| NAMES             |
++-------------------+
+| CAMERON STREEP    |
+| CAMERON WRAY      |
+| CAMERON ZELLWEGER |
++-------------------+
+/*Return the full name of the actor who has appeared in the most films. (Hint: use the ORDER BY and LIMIT clauses.)*/
+SELECT fm.actor_id as "Actor ID", CONCAT(first_name, ' ' ,last_name) as NAMES, COUNT(fm.actor_id) as "Number of films" 
+FROM film f JOIN film_actor fm ON fm.film_id=f.film_id JOIN actor a ON a.actor_id=fm.actor_id 
+GROUP BY fm.actor_id, CONCAT(first_name, ' ' ,last_name) ORDER BY COUNT(fm.actor_id) DESC LIMIT 0,1;
++----------+----------------+-----------------+
+| Actor ID | NAMES          | Number of films |
++----------+----------------+-----------------+
+|      107 | GINA DEGENERES |              42 |
++----------+----------------+-----------------+
+/*Return the film categories with an average movie length longer than the average length of all movies in the sakila database.*/
+SELECT c.name, AVG(length) 
+FROM film f JOIN film_category fm ON f.film_id = fm.film_id JOIN category c ON c.category_id = fm.category_id
+GROUP BY c.name HAVING AVG(length) > (SELECT AVG(length) From film WHERE
+(SELECT COUNT(*) FROM film));
++---------+-------------+
+| name    | AVG(length) |
++---------+-------------+
+| Comedy  |    115.8276 |
+| Drama   |    120.8387 |
+| Foreign |    121.6986 |
+| Games   |    127.8361 |
+| Sports  |    128.2027 |
++---------+-------------+
+/*Return the total sales of each store.*/
+SELECT Store, total_sales FROM sales_by_store;
++---------------------+-------------+
+| Store               | total_sales |
++---------------------+-------------+
+| Woodridge,Australia |    33726.77 |
+| Lethbridge,Canada   |    33679.79 |
++---------------------+-------------+
+
+SELECT COUNT(last_name) FROM actor WHERE last_name = 'KILMER'; 
+SELECT Count(title) FROM film WHERE title LIKE '%WOR%';
+select count(name), name from category where name = drama or family or action;
+/*How many films are rated 'R' or 'NC-17'? */
+SELECT Count(rating) FROM film WHERE rating = 'R' OR 'NC-17';
+
+SELECT c.customer_ID, c.first_Name, c.last_name, 
+SUM(p.amount) AS p_sales_total
+FROM Customer c, payment p
+WHERE c.customer_ID = p.customer_ID
+GROUP BY c.customer_ID;
+ SELECT c.customer_id, c.first_Name, c.last_name, p.amount 
+ FROM customer c Join payment p On c.customer_ID = p.customer_ID group by customer_ID order by amount DESC limit 5;
+
+SELECT c.customer_ID, c.first_Name, c.last_name,
+SUM(p.amount) AS p_sales_total 
+from Customer c Join payment on c.customer_ID = p.customer_ID
+GROUP BY c.customer_ID order by SUM(p.amount) DESC limit 5;
+
+SELECT c.customer_ID, c.first_Name, c.last_name,
+SUM(p.amount) AS p_sales_total
+FROM Customer c, payment p
+WHERE c.customer_ID = p.customer_ID
+GROUP BY c.customer_ID order by SUM(p.amount) DESC limit 5;
++-------------+------------+-----------+---------------+
+| customer_ID | first_Name | last_name | p_sales_total |
++-------------+------------+-----------+---------------+
+|         526 | KARL       | SEAL      |        221.55 |
+|         148 | ELEANOR    | HUNT      |        216.54 |
+|         144 | CLARA      | SHAW      |        195.58 |
+|         137 | RHONDA     | KENNEDY   |        194.61 |
+|         178 | MARION     | SNYDER    |        194.61 |
++-------------+------------+-----------+---------------+
+ /*Which film is most frequently rented*/
+
+SELECT i.film_id, f.title, COUNT(r.inventory_id)
+    -> FROM inventory i
+    -> INNER JOIN rental r
+    -> ON i.inventory_id = r.inventory_id
+    -> INNER JOIN film_text f
+    -> ON i.film_id = f.film_id
+    -> ORDER BY COUNT(r.inventory_id) DESC limit 10;
++---------+------------------+-----------------------+
+| film_id | title            | COUNT(r.inventory_id) |
++---------+------------------+-----------------------+
+|       1 | ACADEMY DINOSAUR |                 16044 |
++---------+------------------+-----------------------+
++-------------+--------+
+| count(name) | name   |
++-------------+--------+
+|          16 | Action |
++-------------+--------+
+1 row in set (0.00 sec)
+SELECT name, Count(*) AS FilmsCount
+FROM category where name = 'drama' or 'Action' or 'sport' or 'family';
+GROUP BY name
+ORDER BY FilmsCount
+mysql> SELECT Count(title) FROM film WHERE title LIKE '%WOR%';
++--------------+
+| Count(title) |
++--------------+
+|           16 |
++--------------+
+1 row in set (0.11 sec)
+mysql> SELECT Store, total_sales FROM sales_by_store;
++---------------------+-------------+
+| Store               | total_sales |
++---------------------+-------------+
+| Woodridge,Australia |    33726.77 |
+| Lethbridge,Canada   |    33679.79 |
++---------------------+-------------+
+2 rows in set, 2 warnings (0.28 sec)
+
+mysql> SELECT COUNT(last_name) FROM actor WHERE last_name = 'KILMER';
++------------------+
+| COUNT(last_name) |
++------------------+
+|                5 |
++------------------+
+1 row in set (0.01 sec)
+Question 8 
+/*How many films have a rental rate higher than the overall average rental rate*/
+
+/*average salary of all employees on that date */
+SELECT AVG(rental_rate) 
+FROM film 
+/*second part*/ 
+SELECT count(film_id), rental_rate
+    -> FROM film
+    -> WHERE rental_rate >= 2.98 ;
++----------------+-------------+
+| count(film_id) | rental_rate |
++----------------+-------------+
+|            659 |        4.99 |
++----------------+-------------+
+SELECT count(film_id), rental rate 
+    -> FROM film
+    -> WHERE rental_rate >= 2.98 ;
++----------------+-------------+
+| count(film_id) | rental_rate |
++----------------+-------------+
+|            659 |        4.99 |
++----------------+-------------+
+Bucket Brotherhood
